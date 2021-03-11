@@ -26,7 +26,7 @@ namespace diaryofmyself.Data
         }
 
 
-        public virtual async Task InsertFeel(Feeling feel)
+        public virtual async Task<int> InsertFeel(Feeling feel)
         {
             _context.Add(feel);
             return await _context.SaveChangesAsync();

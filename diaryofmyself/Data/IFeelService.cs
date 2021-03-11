@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 namespace diaryofmyself.Services.Feel
 {
     public partial interface IFeelService
-    { 
+    {
             Task<IEnumerable<Feeling>> GetAll(string userUID);
-            Task InsertFeel(Feeling feeling);
+            Task<int> InsertFeel(Feeling feeling);
     }
 }

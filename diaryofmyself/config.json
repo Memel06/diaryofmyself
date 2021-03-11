@@ -1,0 +1,5 @@
+﻿{
+  "ConnectionStrings": {
+    "DOMDbContext": "Server=localhost;Database=DOM;Trusted_Connection=True;MultipleActiveResultSets=true;Integrated Security=true;"
+  }
+}

@@ -1,0 +1,24 @@
+﻿@page "/addFeeling"
+@using System
+@using diaryofmyself.Data.Feel
+@using diaryofmyself.Services.Feel
+@using System.Security.Claims
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor
+@inject IFeelService feelService
+
+<h3>Add a Feeling</h3>
+
+<div>
+    <div @onclick="() => InsertFeel(Emotion.Good)">😃</div>
+    <div @onclick="() => InsertFeel(Emotion.Normal)">😐</div>
+    <div @onclick="() => InsertFeel(Emotion.Bad)">😓</div>
+</div>
+
+@code {
+    protected async Task InsertFeel(Emotion emotion)
+    {
+        var userUID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        var feeling = new Feeling(emotion, userUID);
+        await feelService.InsertFeel(feeling);
+    }
+} 

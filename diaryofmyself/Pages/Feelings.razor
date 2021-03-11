@@ -1,0 +1,42 @@
+﻿@page "/feelings"
+@using System
+@using diaryofmyself.Data.Feel
+@using diaryofmyself.Services.Feel
+@using System.Security.Claims
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor
+@inject IFeelService feelService
+
+<h3>Feelings</h3>
+
+@if (feelz == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Feeling</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var feel in feelz)
+            {
+                <tr>
+                    <td>@feel.Created.ToString()</td>
+                    <td>@feel.emotion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    private IEnumerable<Feeling> feelz;
+    protected override async Task OnInitializedAsync()
+    {
+        var userUID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        feelz = await feelService.GetAll(userUID);
+    }
+} 
